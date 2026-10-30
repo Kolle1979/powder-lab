@@ -1,44 +1,50 @@
 # Powder Lab
 
-Browserbasierte 2D-Falling-Sand-Sandbox. Aktueller Spielstand: **v1.1.0**.
+Browserbasierte 2D-Falling-Sand-Sandbox. Spielstand dieses Branches: **v1.2.0**.
 
 [Spiel öffnen](https://kolle1979.github.io/powder-lab/) · [Quellcode](index.html) · [Änderungen](CHANGELOG.md)
 
-Der Spiel-Link setzt eine erfolgreich aktivierte GitHub-Pages-Bereitstellung voraus. Diese Dokumentation bestätigt keinen Deployment-Status. Nach der Bereitstellung ist für Spieler kein GitHub-Konto erforderlich.
+Der öffentliche Link zeigt den zuletzt erfolgreich aus main bereitgestellten Stand. Ein Commit im Entwicklungsbranch allein aktualisiert die Website noch nicht. Für Spieler ist nach Bereitstellung keine Anmeldung erforderlich.
 
 ## Starten
-Online den Spiel-Link öffnen oder `index.html` herunterladen und lokal im Browser öffnen. Keine Installation, kein Build und keine externen Bibliotheken notwendig.
+Spiel-Link öffnen oder index.html herunterladen und lokal im Browser öffnen. Kein Build, keine Installation und keine externen Laufzeitbibliotheken notwendig.
 
 ## Bedienung
-| Eingabe | Aktion |
-|---|---|
-| Linke Maustaste halten | Gewähltes Element platzieren |
-| Rechte Maustaste | Löschen, auch Wände |
-| Mausrad / Größenregler | Pinselgröße ändern |
-| 1–9 | Sand, Wasser, Stein, Holz, Feuer, Lava, Öl, Säure, Bombe |
-| Leertaste / Pause | Simulation anhalten oder fortsetzen |
-| Leeren | Alle Zellen entfernen |
-| Welt zurücksetzen | Leere Welt mit festem Rand herstellen |
+- Malen wählen: Linksklick, Finger oder Stift setzen das gewählte Element.
+- Radieren wählen: Linksklick, Finger oder Stift löschen.
+- Rechtsklick löscht immer, unabhängig vom gewählten Werkzeug.
+- Halten und Ziehen zeichnet bzw. radiert. Mausrad oder Regler ändern die Pinselgröße.
+- 1–9: Sand, Wasser, Stein, Holz, Feuer, Lava, Öl, Säure, Bombe.
+- Pause / Leertaste stoppt die Physik; Malen und Radieren bleiben möglich.
+- Leeren entfernt alle Zellen. Welt zurücksetzen erzeugt eine leere Welt mit Rand.
 
-Pausiert kann weiter gemalt werden. Platzieren ersetzt keine bestehenden Festkörper; zum Umbauen vorher radieren.
+## Neu in 1.2.0
+Einheitlicher Malen-/Radieren-Schalter für Maus und Touch, sichtbarer Werkzeugstatus und größere, gegliederte Kurzanleitung unter Sonstiges. Seitenleistenbreite, Farben, Elementgruppen, Physik und Rendering bleiben erhalten.
 
-## Funktionen und Grenzen
-18 auswählbare Materialien, Wärmeleitung, vereinfachte Explosionen, Pflanzenwachstum, Geschwindigkeitsregler und FPS-Anzeige. Physik: 320 × 180 Zellen, Darstellung: 1280 × 720 Pixel, passend zum Browserfenster skaliert. Spielphysik, keine wissenschaftliche Simulation. 60 FPS sind ein Ziel, keine Hardware-Garantie.
+18 auswählbare Materialien; Physik mit 320 × 180 Zellen, Darstellung auf 1280 × 720 Pixel, passend zum Browserfenster skaliert. Vereinfachte Spielphysik, keine wissenschaftliche Simulation und keine garantierten 60 FPS.
 
-Windows-Desktop-Browser sind der bisherige Schwerpunkt. Die Entwicklung meldete Tests in Chromium. Eine umfassende Windows-/Safari-/iOS-Freigabe liegt nicht vor. Touch besitzt in v1.1.0 keinen eigenen Radier-Schalter; Verbesserungen sind für v1.2.0 vorgesehen.
+## Prüfstatus
+Die Entwicklung prüfte die korrigierte Fassung zuvor mit 29 Checks; der beigefügte kompakte Chromium-Test wurde vor diesem Commit mit 17 bestandenen Prüfungen ausgeführt. Dazu zählen Engine-Vergleich, Maus-Radieren, Touch, Bedienung und Layout. Der Nutzer bestätigte den lokalen Maustest der neuen Fassung. Echtes iOS/Safari für 1.2.0 ist noch zu prüfen. Für 1.1.0 meldete der Nutzer erfolgreiche Tests in Edge, Firefox und iOS Safari. Keine umfassende Browserfreigabe.
+
+Nur für Entwicklung:
+```sh
+python -m pip install playwright
+python -m playwright install chromium
+python tests/test_v120.py
+```
 
 ## Dokumentation
-- [Originaler Startprompt](docs/STARTPROMPT.md): ursprüngliche Anforderungen, nicht Erfüllungsgarantie.
-- [Codeanalyse / Reverse Engineering](docs/ARCHITEKTUR.md): Aufbau der eigenen Implementierung.
+- [Originaler Startprompt](docs/STARTPROMPT.md): Anforderungen, keine Erfüllungsgarantie.
+- [Architektur der unveränderten 1.1.0-Engine](docs/ARCHITEKTUR.md). Die dort beschriebene alte Eingabe wurde durch die oben erklärte 1.2.0-Bedienung ergänzt.
 - [Elemente und Experimente](docs/ELEMENTE.md).
-- [Testplan und Prüfstatus](docs/TESTS.md).
-- [Weiterentwicklung](docs/ROADMAP.md).
-- [Beiträge](CONTRIBUTING.md) und [Regeln für KI-gestützte Änderungen](AGENTS.md).
+- [Ursprünglicher Testplan](docs/TESTS.md); aktuelle ausführbare Checks: tests/test_v120.py.
+- [Roadmap](docs/ROADMAP.md): historischer Plan; die Touch-Funktionen sind in diesem Branch jetzt umgesetzt.
+- [Beiträge](CONTRIBUTING.md) und [KI-Arbeitsregeln](AGENTS.md).
 
-## Veröffentlichung
-GitHub Pages: Settings → Pages → Deploy from a branch → `main` → `/ (root)`. Spieladresse: https://kolle1979.github.io/powder-lab/ . Für die Konfiguration muss der Besitzer angemeldet sein; Spieler brauchen keine Anmeldung. Änderungen an der Spiel-Datei erst nach Prüfung übernehmen.
+## Veröffentlichung und Rückweg
+Pages-Einstellungen bleiben main und / (root). Nach geprüfter Übernahme dieses Branches nach main und erfolgreicher Bereitstellung liefert derselbe Spiel-Link 1.2.0. Kein neuer Link und keine Versionsauswahl nötig.
+
+Der vorherige vollständige Stand ist im Branch release/1.1.0 gesichert. Bei Problemen kann dessen index.html mit einem neuen Commit nach main zurückgespielt werden. Kein Force-Push erforderlich. Sicherungsbranch ist kein Release-Tag.
 
 ## Herkunft und Lizenz
-Dieses Projekt wurde KI-gestützt aus einem Nutzerbriefing entwickelt und iterativ korrigiert. Powder Game und Powder Box: All Ages wurden im Briefing als Inspiration genannt. Keine offizielle Verbindung zu diesen Spielen; die Codeanalyse erklärt ausschließlich dieses Projekt.
-
-[MIT-Lizenz](LICENSE). Keine Zugangsdaten, privaten Chatverläufe oder persönlichen Daten in Beiträge aufnehmen.
+KI-gestützt aus einem Nutzerbriefing entwickelt. Powder Game und Powder Box: All Ages wurden als Inspiration genannt; keine offizielle Verbindung. Die Codeanalyse betrifft nur dieses Projekt. [MIT-Lizenz](LICENSE). Keine Zugangsdaten oder privaten Chatverläufe veröffentlichen.
