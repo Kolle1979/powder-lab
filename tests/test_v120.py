@@ -1,4 +1,4 @@
-"""Run from repository root: python tests/test_v120.py [HTML]. Requires Playwright."""
+"""Historical filename; tests the official 1.2.1. Run: python tests/test_v120.py [HTML]."""
 import asyncio,hashlib,json,sys
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -9,7 +9,8 @@ def check(name,ok):
  if not ok:raise AssertionError(name)
 async def main():
  text=path.read_text(encoding='utf-8');a='// ==================== ELEMENTS';b='// ==================== INPUT / UI'
- check('Engine unverändert',hashlib.sha256(text[text.index(a):text.index(b)].encode()).hexdigest()=='0c82e0083930fed6941db84d15f4d1168f5f12089ff4df18d9ffb771369af6c7')
+ engine=text[text.index(a):text.index(b)].replace('const VERSION="1.2.1";','const VERSION="1.2.0";')
+ check('Engine unverändert',hashlib.sha256(engine.encode()).hexdigest()=='0c82e0083930fed6941db84d15f4d1168f5f12089ff4df18d9ffb771369af6c7')
  async with async_playwright() as p:
   browser=await p.chromium.launch(headless=True)
   page=await browser.new_page(viewport={'width':1280,'height':800},has_touch=True)
@@ -17,7 +18,7 @@ async def main():
   await page.goto(path.as_uri());await page.evaluate('paused=true;clearWorld(true);select(STONE)')
   async def verify(name,js):check(name,await page.evaluate(js))
   r=await page.locator('#game').bounding_box();x=r['x']+r['width']*.5;y=r['y']+r['height']*.4
-  await verify('Version','VERSION==="1.2.0"')
+  await verify('Version','VERSION==="1.2.1"')
   await page.mouse.click(x,y);await verify('Maus malt','particleCount>996')
   await page.locator('#eraseMode').click();await page.mouse.click(x,y)
   await verify('Radieren per Linksklick','particleCount===996')

@@ -11,8 +11,7 @@ def check(name,ok):
  if not ok:raise AssertionError(name)
 async def main():
  before=old.read_bytes();a=before.decode();b=new.read_text(encoding='utf-8')
- hint='<div id="hint">Linksklick / Touch: gewähltes Werkzeug · Rechtsklick: löschen · Mausrad: Pinsel · 1–9: Elemente · Leertaste: Pause</div>'
- check('Nur Hinweiszeile und Versionsnummer geändert',a.count(hint)==1 and b==a.replace('1.2.0','1.2.1-rc.1').replace(hint,''))
+ check('Release entspricht freigegebener Vorschau bis auf Versionskennzeichnung',a==b.replace('1.2.1-rc.1','1.2.1'))
  async with async_playwright() as p:
   browser=await p.chromium.launch(headless=True)
   page=await browser.new_page(viewport={'width':390,'height':844},has_touch=True)
@@ -34,6 +33,6 @@ async def main():
    await verify('Layout %dx%d'%(w,h),'(()=>{fitCanvas();let c=canvas.getBoundingClientRect(),s=document.getElementById("stage").getBoundingClientRect();return c.left>=s.left&&c.right<=s.right+1&&c.top>=s.top&&c.bottom<=s.bottom+1})()')
   check('Keine JavaScript-Fehler',not errors)
   await browser.close()
- check('Offizielle Datei unverändert',old.read_bytes()==before)
+ check('Offizielle Datei durch Test nicht verändert',old.read_bytes()==before)
  print(json.dumps(results,ensure_ascii=False,indent=2))
 if __name__=='__main__':asyncio.run(main())
