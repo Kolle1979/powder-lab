@@ -22,3 +22,8 @@
 - Vor offizieller Übernahme Rückweg sichern, Änderungen per Pull Request prüfen und nach Deployment den bisherigen Hauptlink kontrollieren.
 - Version/Commit und tatsächlich ausgeführte Tests dokumentieren. Eine Testfassung bekommt eine eigene rc-Versionsnummer.
 - Details und aktuelle Vorschau: docs/RELEASE_WORKFLOW.md.
+
+## Vereinfachung auf ausdrücklichen Nutzerwunsch
+- Keine zusätzlichen Korrektur- oder Entwicklungsbranches ohne vorherige Absprache anlegen.
+- Teständerungen lokal prüfen und dann Testdatei, Tests und Hinweise gemeinsam direkt auf main speichern; offizielle index.html unangetastet lassen. Keine unnötig aufgeteilten Upload-Schritte.
+- Erst Nutzer am festen /test/-Link testen lassen. Offizielle Übernahme nur nach ausdrücklicher Freigabe. Bestehenden Zusatzbranch fix/bomb-1.2.2 nicht weiter benutzen und erst nach Test sowie gesonderter Löschbestätigung entfernen.
