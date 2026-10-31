@@ -1,4 +1,4 @@
-"""Historical filename; tests the official 1.2.1. Run: python tests/test_v120.py [HTML]."""
+"""Historical filename; tests official 1.2.2. Run: python tests/test_v120.py [HTML]."""
 import asyncio,hashlib,json,sys
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -9,16 +9,20 @@ def check(name,ok):
  if not ok:raise AssertionError(name)
 async def main():
  text=path.read_text(encoding='utf-8');a='// ==================== ELEMENTS';b='// ==================== INPUT / UI'
- engine=text[text.index(a):text.index(b)].replace('const VERSION="1.2.1";','const VERSION="1.2.0";')
- check('Engine unverändert',hashlib.sha256(engine.encode()).hexdigest()=='0c82e0083930fed6941db84d15f4d1168f5f12089ff4df18d9ffb771369af6c7')
+ check('Freigegebene Bomben-Engine',hashlib.sha256(text[text.index(a):text.index(b)].encode()).hexdigest()=='149994a8983c06765ea258e246706c9b832d252713d0014cea4288746531d50e')
  async with async_playwright() as p:
   browser=await p.chromium.launch(headless=True)
   page=await browser.new_page(viewport={'width':1280,'height':800},has_touch=True)
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   await page.goto(path.as_uri());await page.evaluate('paused=true;clearWorld(true);select(STONE)')
   async def verify(name,js):check(name,await page.evaluate(js))
+  await verify('Bombe bleibt fest','(()=>{put(100,30,BOMB);for(let t=0;t<30;t++)simulate();return get(100,30)===BOMB})()')
+  await verify('Feuer zündet Fläche in einem Tick','(()=>{clearWorld(true);for(let y=30;y<70;y++)for(let x=80;x<120;x++)put(x,y,BOMB);put(79,50,FIRE);simulate();return !cells.includes(BOMB)&&queueRead===queueWrite})()')
+  await verify('Lava zündet sofort','(()=>{clearWorld(true);put(100,50,BOMB);put(99,50,LAVA);simulate();return !cells.includes(BOMB)})()')
+  await verify('Keine Bombenreste','(()=>{for(let t=0;t<60;t++)simulate();return !cells.includes(BOMB)&&queueRead===queueWrite})()')
+  await page.evaluate('clearWorld(true)')
   r=await page.locator('#game').bounding_box();x=r['x']+r['width']*.5;y=r['y']+r['height']*.4
-  await verify('Version','VERSION==="1.2.1"')
+  await verify('Version','VERSION==="1.2.2"')
   await page.mouse.click(x,y);await verify('Maus malt','particleCount>996')
   await page.locator('#eraseMode').click();await page.mouse.click(x,y)
   await verify('Radieren per Linksklick','particleCount===996')

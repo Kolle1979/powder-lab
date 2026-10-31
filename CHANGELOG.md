@@ -1,5 +1,13 @@
 # Änderungsprotokoll
 
+## 1.2.2 – freigegebene Bomben-Korrektur
+- Bombe statisch wie Stein; Feuer/Lava zünden ohne Zufallsverzögerung.
+- Zusammenhängende Flächen und Bomben im Explosionsradius explodieren im selben Simulationsschritt, ohne verzögerte Bombenreste. Entfernte Bomben außerhalb bleiben stehen. Schießpulver unverändert.
+- Nutzer bestätigte am 31.10.2026 um 09:25 CET den Test und gab 1.2.2 offiziell frei.
+- Exakt die freigegebene 1.2.2-rc.1 übernommen; ausschließlich Versionskennzeichnung geändert. Testseite unverändert erhalten.
+- Finale Syntaxprüfung und 21 Release-Checks bestanden; die Vorschau hatte zuvor 34 Checks bestanden. Kein Live-Deployment- oder CI-Nachweis durch diesen Commit.
+- Direkte Übernahme auf main ohne zusätzliche Branches. Rückweg: 5ecd1345bd35730a2644482f4a49c7578b82824a:index.html (1.2.1). Keine Branch-Löschung und kein Release-Tag in diesem Upload.
+
 ## 1.2.1 – Nutzerfreigabe erhalten, Veröffentlichung vorbereitet
 - Untere Hinweiszeile an der Spielfläche entfernt; linke Anleitung bleibt erhalten.
 - Freigegebene Vorschau 1.2.1-rc.1 unverändert übernommen, abgesehen von der Versionskennzeichnung 1.2.1. Kein zusätzlicher Spielcode.

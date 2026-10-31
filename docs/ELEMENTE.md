@@ -1,4 +1,4 @@
-# Elemente und Experimente – v1.1.0
+# Elemente und Experimente – v1.2.2
 
 | Material | Implementiertes Verhalten |
 |---|---|
@@ -18,10 +18,10 @@
 | Pflanze | Statisch, wächst langsam bei Anschluss an Erde/Pflanzen nach oben in Luft/Wasser; brennbar. |
 | Eis | Statisch, schmilzt durch Wärme oder heißen Kontakt zu Wasser. |
 | Metall | Statisch, leitet Wärme und wird bei hoher Wärme zu Lava. |
-| Bombe | Fällt; bei Zündung Explosion mit Radius 13 und möglichen Kettenreaktionen. |
+| Bombe | Statisch wie Stein. Feuer/Lava zünden sofort; verbundene Bombenzellen und weitere Bomben im Explosionsradius explodieren gemeinsam in einem Simulationsschritt. Kreisradius 13 je Bombenzelle, überlappende Flächen vereinigt. Keine verzögerten Bombenreste; entfernte Bomben außerhalb bleiben stehen. |
 | Wand | Statisch, säure- und explosionsfest; per Radierer weiterhin löschbar. |
 
-Luft ist der leere Zustand. Glut ist eine zusätzliche interne Material-ID und kein auswählbares Element. Zufall, Nachbarschaft und Scanreihenfolge beeinflussen den Ablauf.
+Luft ist der leere Zustand. Glut ist eine zusätzliche interne Material-ID und kein auswählbares Element. Zufall, Nachbarschaft und Scanreihenfolge beeinflussen den Ablauf; der direkte Bombenkontakt mit Feuer/Lava ist nicht zufallsabhängig.
 
 ## Fünf Experimente
 1. Glasbecken mit Wasser füllen, Öl hinzufügen und die obere Schicht entzünden.

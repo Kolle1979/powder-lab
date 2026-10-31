@@ -1,53 +1,50 @@
 # Powder Lab
 
-Browserbasierte 2D-Falling-Sand-Sandbox. Spielstand dieses Branches: **v1.2.1**.
+Browserbasierte 2D-Falling-Sand-Sandbox. Spielstand: **v1.2.2**.
 
 [Spiel öffnen](https://kolle1979.github.io/powder-lab/) · [Testseite](https://kolle1979.github.io/powder-lab/test/) · [Quellcode](index.html) · [Änderungen](CHANGELOG.md)
 
-Der Hauptlink zeigt den zuletzt erfolgreich aus main bereitgestellten Stand. Ein Entwicklungscommit allein aktualisiert die Website nicht. Zum Spielen ist keine Anmeldung nötig.
+Der Hauptlink zeigt den zuletzt erfolgreich aus main bereitgestellten Stand. Ein Commit allein ist kein Live-Deployment-Nachweis. Zum Spielen ist keine Anmeldung nötig. Die eigenständige index.html lässt sich auch lokal öffnen; kein Build und keine externen Laufzeitbibliotheken erforderlich.
 
-## Starten und Bedienung
-Spiel-Link öffnen oder index.html lokal im Browser öffnen. Kein Build und keine externen Laufzeitbibliotheken nötig.
-- Malen: Linksklick, Finger oder Stift setzen das Element.
+## Bedienung
+- Malen: Linksklick, Finger oder Stift setzen das gewählte Element.
 - Radieren: Linksklick, Finger oder Stift löschen. Rechtsklick löscht immer.
-- Halten und Ziehen zeichnet bzw. radiert; Mausrad oder Regler ändern die Pinselgröße.
+- Halten/Ziehen zeichnet oder radiert. Mausrad oder Regler ändern die Pinselgröße.
 - 1–9: Sand, Wasser, Stein, Holz, Feuer, Lava, Öl, Säure, Bombe.
-- Pause / Leertaste stoppt die Physik, nicht Malen/Radieren.
-- Leeren entfernt alles; Welt zurücksetzen erzeugt eine leere Welt mit Rand.
+- Pause / Leertaste stoppt Physik, nicht Malen/Radieren.
+- Leeren entfernt alles; Zurücksetzen erzeugt eine leere Welt mit Rand.
 
-## Neu in 1.2.1
-Die untere Hinweiszeile an der Spielfläche entfällt. Die linke Kurzanleitung bleibt. Exakt die vom Nutzer freigegebene Testfassung 1.2.1-rc.1; nur die Versionskennzeichnung wurde für das Release geändert.
+## Neu in 1.2.2
+Bombe ist statisch wie Stein. Feuer-/Lava-Kontakt zündet ohne Zufallsverzögerung. Zusammenhängende Bombenflächen und weitere Bomben im Explosionsradius werden in einem Simulationsschritt verarbeitet; entfernte außerhalb bleiben stehen. Keine verzögerten Bombenreste. Feuer und Rauch steigen danach normal auf; frisch nachgemalte Bomben können erneut zünden. Schießpulver bleibt fallendes Pulver mit bisheriger Warteschlange. Druck ist weiterhin vereinfacht.
 
-Seit 1.2.0: gemeinsamer Malen-/Radieren-Schalter für Maus und Touch, Werkzeugstatus und größere, gegliederte linke Anleitung. Physik, Rendering, Farben und Elementgruppen bleiben erhalten.
+Die offizielle Datei ist exakt die freigegebene Vorschau 1.2.2-rc.1, nur die Versionskennzeichnung wurde geändert. Oberfläche, Eingabe und Rendering bleiben erhalten. Seit 1.2.1 entfällt die untere Hinweiszeile; die linke Anleitung bleibt.
 
-18 auswählbare Materialien, 320 × 180 Physikzellen, Darstellung auf 1280 × 720 Pixel mit Fensteranpassung. Vereinfachte Spielphysik; keine wissenschaftliche Simulation oder garantierten 60 FPS.
+18 Materialien, 320 × 180 Physikzellen, Darstellung auf 1280 × 720 Pixel mit Fensteranpassung. Spielphysik, keine wissenschaftliche Simulation oder garantierten 60 FPS.
 
-## Prüfstatus und Freigabe
-Nutzer meldete am 31.10.2026 die Testfassung als vollständig getestet und gab die offizielle 1.2.1 frei. Einzelne Geräte- und Browser-Versionen wurden dabei nicht genannt; daraus wird keine allgemeine Kompatibilitätszusage abgeleitet.
+## Freigabe und Tests
+Nutzer bestätigte am 31.10.2026 um 09:25 CET den erfolgreichen Test und erteilte die offizielle Freigabe. Geräte-/Browser-Versionen wurden dabei nicht genannt; keine allgemeine Kompatibilitätszusage.
 
-Vor dem Release-Commit: Node.js-Syntaxprüfung und 29 bestandene Chromium-Checks (17 Release, 12 Vorschau). Der Dateivergleich prüft, dass sich Vorschau und Release nur in der Versionskennzeichnung unterscheiden. Browser-Touch-Prüfungen sind kein eigenständiger echter iOS-Nachweis. Kein CI- oder Live-Deployment-Nachweis durch diesen Commit.
+Die Vorschau bestand 34 Chromium-Checks einschließlich deterministischem Vergleich ohne Bomben mit 1.2.1. Vor dem offiziellen Upload: exakter Vorschau/Release-Vergleich, Node.js-Syntaxprüfung und 21 bestandene Release-Checks. Kein CI- oder erfolgreicher Live-Deployment-Nachweis durch diesen Commit. Simuliertes Touch ist kein eigener echter iOS-Nachweis.
 
 Nur für Entwicklung:
-```sh
 python -m pip install playwright
 python -m playwright install chromium
 python tests/test_v120.py
-python tests/test_preview.py
-```
-Der historische Dateiname test_v120.py bleibt bestehen; er prüft jetzt die offizielle 1.2.1.
+python tests/test_bombs.py
+
+Der historische Dateiname test_v120.py prüft jetzt die offizielle 1.2.2. test_preview.py startet die aktuelle Bomben-Vorschauprüfung.
 
 ## Dokumentation
 - [Startprompt](docs/STARTPROMPT.md): Anforderungen, keine Erfüllungsgarantie.
-- [Architektur](docs/ARCHITEKTUR.md): unveränderte Engine; alte Eingabebeschreibung durch die aktuelle Anleitung ergänzt.
+- [Architektur](docs/ARCHITEKTUR.md): historischer Engine-Stand; aktuelle Bombenänderung in [Bomben-Testhinweisen](docs/BOMB_FIX_1.2.2.md).
 - [Elemente und Experimente](docs/ELEMENTE.md).
-- [Testplan](docs/TESTS.md) und [Test-/Freigabeprozess](docs/RELEASE_WORKFLOW.md).
-- [Roadmap](docs/ROADMAP.md): historischer Plan; Touch ist inzwischen umgesetzt.
-- [Beiträge](CONTRIBUTING.md) und [KI-Regeln](AGENTS.md).
+- [Testplan](docs/TESTS.md), [Freigabeprozess](docs/RELEASE_WORKFLOW.md), [KI-Regeln](AGENTS.md).
+- [Roadmap](docs/ROADMAP.md): historischer Plan; [Beiträge](CONTRIBUTING.md).
 
-## Veröffentlichung und Rückweg
-Pages bleibt main / (root). Nach geprüftem Merge und erfolgreichem Deployment liefert derselbe Hauptlink 1.2.1. Die Testseite bleibt separat als 1.2.1-rc.1 erhalten. Jede Weiterentwicklung zuerst testen und erst nach Nutzerfreigabe offiziell übernehmen.
+## Einfacher Ablauf und Rückweg
+Neue Änderungen lokal prüfen und Testdatei/Tests/Hinweise gemeinsam direkt nach main übernehmen; offizielle index.html bleibt bis zur ausdrücklichen Nutzerfreigabe unberührt. Keine zusätzlichen Branches ohne Absprache. Für diese freigegebene 1.2.2 erfolgt die offizielle Übernahme ebenfalls direkt auf main. Die Testseite bleibt separat bei 1.2.2-rc.1. Pages bleibt main / (root), der Hauptlink unverändert.
 
-Rücksetzpunkt für die bisherige 1.2.0: Commit a73d7f4424519856836903bbb639ababeac9932f, Datei index.html. Deren Spielstand liegt auch im Branch version/1.2.0. Bei Problemen mit einem neuen Commit wiederherstellen, kein Force-Push. release/1.1.0 bleibt ebenfalls erhalten. Diese Branches sind keine Release-Tags.
+Rücksetzpunkt für 1.2.1: 5ecd1345bd35730a2644482f4a49c7578b82824a:index.html. Bei Problemen vorherige Datei per neuem Commit wiederherstellen, kein Force-Push. Ältere Versionsstände bleiben in der Historie und vorhandenen Branches erhalten; dieser Upload erstellt oder löscht keinen Branch und keinen Release-Tag.
 
 ## Herkunft und Lizenz
-KI-gestützt aus einem Nutzerbriefing entwickelt. Powder Game und Powder Box: All Ages wurden als Inspiration genannt; keine offizielle Verbindung. Die Analyse betrifft eigenen Projektcode. [MIT-Lizenz](LICENSE). Keine Geheimnisse oder privaten Chatverläufe veröffentlichen.
+KI-gestützt aus einem Nutzerbriefing entwickelt, inspiriert von Powder Game und Powder Box: All Ages; keine offizielle Verbindung. Analyse betrifft eigenen Projektcode. [MIT-Lizenz](LICENSE). Keine Geheimnisse oder privaten Chatverläufe veröffentlichen.
