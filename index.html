@@ -2,13 +2,13 @@
 <html lang="de">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Powder Lab v1.2.2</title>
+<title>Powder Lab v1.2.3</title>
 <style>
 :root{--bg:#0b0e14;--panel:#141a24;--panel2:#1b2330;--text:#e7edf5;--muted:#93a3b8;--accent:#4cc9f0}*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:14px system-ui,Segoe UI,Arial,sans-serif;overflow:hidden}#app{display:flex;height:100vh;height:100dvh}#sidebar{width:270px;flex:0 0 270px;background:var(--panel);border-right:1px solid #263041;padding:10px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}h1{font-size:16px;margin:2px 0 8px}.version{font:10px monospace;color:var(--muted);float:right;margin-top:5px}h2{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:10px 0 5px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.el{height:46px;border:1px solid #2c384a;border-radius:7px;background:var(--panel2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;position:relative;padding:3px 1px;min-width:0}.el:hover{border-color:var(--accent)}.el.active{border-color:var(--accent);box-shadow:0 0 0 2px #4cc9f055}.swatch{width:18px;height:18px;border-radius:4px;margin-bottom:3px;box-shadow:0 0 0 1px #0008;flex-shrink:0}.name{font-size:10px;color:#d7e1ee}.name.long{font-size:8px}.key{position:absolute;top:2px;right:4px;font-size:9px;color:#7c8ba0}#preview{width:100%;min-height:58px;border:1px solid #2c384a;border-radius:8px;background:#0f141c;display:flex;align-items:center;justify-content:center;gap:10px}#previewCanvas{image-rendering:pixelated;border-radius:5px;width:22px;height:22px}.controls{display:flex;flex-direction:column;gap:6px}label{font-size:11px;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--accent)}button{font:inherit;background:var(--panel2);border:1px solid #2c384a;color:var(--text);padding:7px 8px;border-radius:7px;cursor:pointer}button:hover{border-color:var(--accent)}.row{display:flex;gap:6px}.row button{flex:1}#stage{flex:1;min-width:0;min-height:0;position:relative;background:#05070b;display:flex;align-items:center;justify-content:center;overflow:hidden}#game{display:block;flex-shrink:0;image-rendering:pixelated;border:1px solid #263041;border-radius:4px;box-shadow:0 0 40px #000a;touch-action:none;cursor:crosshair}#hud{position:absolute;top:8px;left:8px;background:#000b;padding:5px 9px;border-radius:6px;font:11px monospace;color:#cfe8ff;pointer-events:none}#hint{position:absolute;bottom:8px;left:8px;right:8px;width:fit-content;background:#000b;padding:5px 9px;border-radius:6px;font-size:11px;color:#9fb0c4;pointer-events:none}.note{font-size:10px;color:var(--muted);line-height:1.5;margin:3px 0}@media(max-width:850px){#sidebar{width:190px;flex-basis:190px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:500px){#sidebar{width:148px;flex-basis:148px;padding:7px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.row{flex-direction:column}h1{font-size:14px}.version{float:none;display:block}#hint{font-size:10px}}
 #toolModes button{min-height:44px}#toolModes button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px #4cc9f055}#toolStatus{font-size:12px;color:var(--accent)}#sidebar label{font-size:12px}#sidebar h2{font-size:12px}#sidebar .name{font-size:11px}#sidebar .name.long{font-size:9px}.note{font-size:13px;line-height:1.55}.note h3{font-size:14px;color:var(--text);margin:12px 0 4px}.note p{margin:0 0 8px}.note ul{margin:0 0 8px;padding-left:17px}
 </style></head><body>
 <div id="app"><aside id="sidebar">
-<h1>🧪 Powder Lab <span class="version">v1.2.2</span></h1>
+<h1>🧪 Powder Lab <span class="version">v1.2.3</span></h1>
 <div id="preview"><canvas id="previewCanvas" width="18" height="18"></canvas><div id="previewText">Sand</div></div>
 <div class="row" id="toolModes" role="group" aria-label="Werkzeug für Maus und Touch"><button id="paintMode" type="button" aria-pressed="true">✏️ Malen</button><button id="eraseMode" type="button" aria-pressed="false">🧽 Radieren</button></div>
 <div id="toolStatus" role="status" aria-live="polite">Aktiv: Malen</div>
@@ -19,11 +19,12 @@
 <h2>Energie &amp; Gefahren</h2><div class="grid" id="g3"></div>
 <h2>Sonstiges</h2><div class="grid" id="g4"></div>
 <section class="note" id="gameHelp" aria-label="Kurzanleitung"><h3>Spielprinzip</h3><p>Wähle ein Element und experimentiere: Sand fällt, Wasser fließt und Feuer entzündet Holz. Baue Behälter und kombiniere Materialien.</p><h3>Maus</h3><ul><li>„Malen“ + linke Taste: Element setzen.</li><li>„Radieren“ + linke Taste: löschen.</li><li>Rechte Taste: immer löschen.</li><li>Mausrad: Pinselgröße. 1–9: Elemente.</li></ul><h3>iOS / Touch / Stift</h3><p>Oben „Malen“ oder „Radieren“ wählen. Dann mit einem Finger oder Stift auf der Spielfläche ziehen. Pinselgröße und Tempo über die Regler ändern.</p><h3>Pause &amp; Welt</h3><p>Pause oder Leertaste hält die Physik an; Malen und Radieren bleiben möglich.<br>Leeren entfernt alles.<br>Zurücksetzen erstellt eine leere Welt mit Rand.</p><p>Vereinfachte Spielphysik, keine wissenschaftliche Simulation.</p></section>
-</aside><main id="stage"><canvas id="game" width="1280" height="720" aria-label="Physik-Spielfläche"></canvas><div id="hud">v1.2.2 · startet …</div></main></div>
+</aside><main id="stage"><canvas id="game" width="1280" height="720" aria-label="Physik-Spielfläche"></canvas><div id="hud">v1.2.3 · startet …</div></main></div>
 <script>
 "use strict";
 // ==================== ELEMENTS ====================
-const VERSION="1.2.2";
+const VERSION="1.2.3";
+const PAINT_FIRE_FLAG=512,PAINT_FIRE_TICKS=6;
 const AIR=0,SAND=1,WATER=2,STONE=3,DIRT=4,WOOD=5,FIRE=6,SMOKE=7,STEAM=8,LAVA=9,OIL=10,GUNPOWDER=11,ACID=12,GLASS=13,PLANT=14,ICE=15,METAL=16,BOMB=17,WALL=18,EMBER=19;
 const EMPTY=0,POWDER=1,LIQUID=2,SOLID=3,GAS=4;
 const elements=[];
@@ -80,7 +81,7 @@ function clearWorld(border){
  if(border){for(let x=0;x<W;x++){put(x,0,WALL);put(x,H-1,WALL);}for(let y=1;y<H-1;y++){put(0,y,WALL);put(W-1,y,WALL);}}
  nextActive.fill(1);
 }
-function swapCells(a,b){let v=cells[a];cells[a]=cells[b];cells[b]=v;v=life[a];life[a]=life[b];life[b]=v;v=heat[a];heat[a]=heat[b];heat[b]=v;updated[a]=updated[b]=tick;wake(a%W,(a/W)|0);wake(b%W,(b/W)|0);}
+function swapCells(a,b){let v=cells[a];cells[a]=cells[b];cells[b]=v;v=life[a];life[a]=life[b];life[b]=v;v=heat[a];heat[a]=heat[b];updated[a]=updated[b]=tick;wake(a%W,(a/W)|0);wake(b%W,(b/W)|0);}
 // ==================== PHYSICS ====================
 const DX=new Int8Array([0,1,0,-1]),DY=new Int8Array([-1,0,1,0]);
 function move(x,y,nx,ny){
@@ -145,8 +146,7 @@ function blast(x,y,r){
  }
  // Short outward displacements: each step collision-checks solid boundaries.
  for(let k=0;k<48;k++){
-  const a=k*Math.PI/24,ux=Math.cos(a),uy=Math.sin(a);
-  let px=Math.round(x+ux*(r+1)),py=Math.round(y+uy*(r+1));
+  const a=k*Math.PI/24,ux=Math.cos(a),uy=Math.sin(a);let px=Math.round(x+ux*(r+1)),py=Math.round(y+uy*(r+1));
   const e=get(px,py);if(state[e]!==POWDER&&state[e]!==LIQUID&&state[e]!==GAS)continue;
   for(let s=0;s<4;s++){const nx=px+Math.sign(ux),ny=py+Math.sign(uy);if(!inBounds(nx,ny)||get(nx,ny)!==AIR)break;swapCells(py*W+px,ny*W+nx);px=nx;py=ny;}
  }
@@ -170,6 +170,12 @@ function thermal(x,y){
 }
 function react(x,y){
  const i=y*W+x,e=cells[i];
+ if(e===WOOD||e===OIL){
+  for(let d=0;d<4;d++){
+   const nx=x+DX[d],ny=y+DY[d];if(!inBounds(nx,ny))continue;
+   const j=ny*W+nx;if(cells[j]===FIRE&&life[j]>PAINT_FIRE_FLAG){ignite(x,y);return true;}
+  }
+ }
  if(e===BOMB||e===FIRE||e===LAVA){
   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
    if(dx===0&&dy===0)continue;const nx=x+dx,ny=y+dy,ne=get(nx,ny);
@@ -198,7 +204,7 @@ function react(x,y){
     return true;
    }
    if(ne===ICE){put(nx,ny,WATER);if(e!==LAVA){put(x,y,SMOKE);return true;}}
-   if(flammability[ne]>0&&Math.random()<(e===LAVA?.5:flammability[ne]*.3))ignite(nx,ny);
+   if(flammability[ne]>0&&((e===FIRE&&life[i]>PAINT_FIRE_FLAG&&(ne===WOOD||ne===OIL))||Math.random()<(e===LAVA?.5:flammability[ne]*.3)))ignite(nx,ny);
   }
  }
  if(e===WATER){for(let d=0;d<4;d++){const nx=x+DX[d],ny=y+DY[d],ne=get(nx,ny);if(ne===LAVA){put(nx,ny,STONE);put(x,y,STEAM);return true;}if(ne===FIRE||ne===EMBER)put(nx,ny,SMOKE);}}
@@ -220,6 +226,7 @@ function updateCell(x,y){
  if(s===GAS){
   wake(x,y);
   if(life[i]>0)life[i]--;
+  if(e===FIRE&&life[i]===PAINT_FIRE_FLAG){put(x,y,AIR);return;}
   if(life[i]===0){put(x,y,e===STEAM?WATER:e===FIRE?SMOKE:AIR);return;}
   const dir=Math.random()<.5?1:-1;
   if(!move(x,y,x,y-1)&&!move(x,y,x+dir,y-1))move(x,y,x+dir,y);
@@ -312,7 +319,10 @@ function paint(x,y,erase){
   const nx=x+dx,ny=y+dy;if(!inBounds(nx,ny))continue;
   const old=get(nx,ny);
   if(erase){if(old!==AIR)put(nx,ny,AIR);}
-  else if(old===AIR||state[old]===GAS)put(nx,ny,selected);
+  else if(old===AIR||state[old]===GAS){
+   if(selected===FIRE&&old===FIRE&&life[ny*W+nx]<PAINT_FIRE_FLAG)continue;
+   put(nx,ny,selected,selected===FIRE?PAINT_FIRE_FLAG+PAINT_FIRE_TICKS:-1);
+  }
  }
 }
 function paintLine(x0,y0,x1,y1,erase){

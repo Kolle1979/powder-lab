@@ -1,5 +1,11 @@
 # Änderungsprotokoll
 
+## 1.2.3 – freigegebene Feuer-Korrektur
+- Gemaltes Feuer in freier Luft verglüht kurz nach dem Setzen.
+- Holz und Öl entzünden sich bei Kontakt mit Feuer und brennen weiter.
+- Pause hält die Simulation an; nach dem Fortsetzen brennt Feuer weiter.
+- Die getestete 1.2.3-rc.1 aus test/index.html wurde unverändert übernommen; ausschließlich die Versionskennzeichnung wurde auf 1.2.3 angehoben.
+
 ## 1.2.2 – freigegebene Bomben-Korrektur
 - Bombe statisch wie Stein; Feuer/Lava zünden ohne Zufallsverzögerung.
 - Zusammenhängende Flächen und Bomben im Explosionsradius explodieren im selben Simulationsschritt, ohne verzögerte Bombenreste. Entfernte Bomben außerhalb bleiben stehen. Schießpulver unverändert.
